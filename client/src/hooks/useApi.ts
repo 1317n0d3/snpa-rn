@@ -1,12 +1,12 @@
 import * as AsyncStorage from "asyncStorage";
 
 const IP = {
-  pc: '192.168.0.103',
+  pc1: '192.168.0.103',
   phone: '172.20.10.2',
   sstu: '192.168.156.84'
 }
 
-const _rootUrl = `http://${IP.pc}:3000/api`;
+const _rootUrl = `http://${IP.pc1}:3000/api`;
 const _tagsUrl = '/tags';
 const _notesUrl = '/notes';
 
