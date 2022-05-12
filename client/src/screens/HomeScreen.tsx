@@ -20,7 +20,7 @@ const HomeScreen = () => {
           <Text key={idx} style={styles.text}>{textField}</Text>
         )
       })}
-      <Image source={{uri: photo_uri}} style={{width: 100, height: 100}}/>
+      <Image source={{uri: photo_uri}} style={{width: 300, height: 300}}/>
     </View>
   )
 }
@@ -30,13 +30,15 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 10,
     display: 'flex',
-    alignItems: 'center',
+    alignItems: "center",
     justifyContent: 'center',
-    flexDirection: 'row'
+    flexDirection: "column-reverse"
   },
   text: {
-    marginBottom: 15,
-    color: ColorsEnum.black
+    margin: 7,
+    color: ColorsEnum.black,
+    fontWeight: '600',
+    fontSize: 16,
   }
 })
 

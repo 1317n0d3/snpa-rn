@@ -4,7 +4,7 @@ import { ColorsEnum } from "constants/Colors";
 import * as ImagePicker from 'expo-image-picker';
 import { useApi, UserDataType } from "hooks/useApi";
 import { UnauthenticatedUserNavigatorScreensEnum } from "navigation/UnauthenticatedUserNavigator";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Image,
   Keyboard,
@@ -83,6 +83,26 @@ const SignUpScreen = ({navigation}: RootTabScreenProps<UnauthenticatedUserNaviga
     register(formData).then(res => console.log(res))
   }
 
+    const openCamera = async () => {
+    // Ask the user for the permission to access the camera
+    const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
+
+    if (permissionResult.granted === false) {
+      alert("You've refused to allow this appp to access your camera!");
+      return;
+    }
+
+    const result = await ImagePicker.launchCameraAsync();
+
+    // Explore the result
+    console.log(result);
+
+    if (!result.cancelled) {
+      handleFieldChange('photo_uri', result.uri);
+      console.log(result.uri);
+    }
+  }
+
   return (
     <ScrollView>
     <KeyboardAvoidingView
@@ -114,6 +134,9 @@ const SignUpScreen = ({navigation}: RootTabScreenProps<UnauthenticatedUserNaviga
         fields={fields.map(field => ({...field, value: formData[field.key]}))}
         handleFieldChange={handleFieldChange}
       />
+      <Pressable style={styles.btn} onPress={openCamera}>
+        <Text style={styles.btnText}>Сделать фото</Text>
+      </Pressable>
       <Pressable style={styles.btn} onPress={handleSignUpBtnPress}>
         <Text style={styles.btnText}>Зарегистрироваться</Text>
       </Pressable>
@@ -152,7 +175,7 @@ export const styles = StyleSheet.create({
     backgroundColor: '#dbdbdb'
   },
   btn: {
-    margin: 30,
+    margin: 10,
     display: 'flex',
     alignItems: 'center',
     color: ColorsEnum.black,
