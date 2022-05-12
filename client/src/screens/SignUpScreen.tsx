@@ -83,7 +83,7 @@ const SignUpScreen = ({navigation}: RootTabScreenProps<UnauthenticatedUserNaviga
     register(formData).then(res => console.log(res))
   }
 
-    const openCamera = async () => {
+  const openCamera = async () => {
     // Ask the user for the permission to access the camera
     const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
 

@@ -6,6 +6,7 @@ import React, { useEffect, useState } from "react";
 import { Image, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { HandleFieldChangeType } from "types";
 import { getImageUri } from "utils/getImageUri";
+import * as ImagePicker from 'expo-image-picker';
 
 
 const SettingsScreen = () => {
@@ -44,6 +45,26 @@ const SettingsScreen = () => {
     if (isAllowedToChangePassword) updateUserData({password: formData['newPasswordConfirm']}, id)
   }
 
+  const openCamera = async () => {
+    // Ask the user for the permission to access the camera
+    const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
+
+    if (permissionResult.granted === false) {
+      alert("You've refused to allow this appp to access your camera!");
+      return;
+    }
+
+    const result = await ImagePicker.launchCameraAsync();
+
+    // Explore the result
+    console.log(result);
+
+    if (!result.cancelled) {
+      handleFieldChange('photo_uri', result.uri);
+      console.log(result.uri);
+    }
+  }
+
   return (
     <View style={styles.container}>
       <Pressable style={styles.imgContainer} onPress={handleLoadPhotoBtn}>
@@ -51,6 +72,15 @@ const SettingsScreen = () => {
           source={{uri: formData['photo_uri'] || photo_uri}}
           style={{width: 200, height: 200}}
         />
+      </Pressable>
+      <Pressable
+        style={[
+          styles.confirmPassBtn,
+          {backgroundColor: '#a1ceff'}
+        ]}
+        onPress={openCamera}
+      >
+        <Text style={styles.text}>Сделать фото</Text>
       </Pressable>
       <View style={styles.passwordContainer}>
         <InputFieldList

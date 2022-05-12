@@ -1,6 +1,6 @@
 import { ColorsEnum } from "constants/Colors";
 import { AuthContext, useAuth } from "providers/AuthProvider";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 
 
